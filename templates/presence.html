@@ -1,0 +1,20 @@
+<script>
+(() => {
+  const endpoint = '{% url "presence" %}';
+  const csrf = '{{ csrf_token|escapejs }}';
+  let sent = 0, pending = false;
+  async function active(event) {
+    if (!event.isTrusted || document.hidden || pending || Date.now() - sent < 60000) return;
+    pending = true;
+    sent = Date.now();
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      await fetch(endpoint, {method: 'POST', headers: {'X-CSRFToken': csrf}, signal: controller.signal, cache: 'no-store'});
+    } catch (_) {
+      // Keep the user's draft intact; reconnect through the wake-up entrance.
+    } finally { clearTimeout(timeout); pending = false; }
+  }
+  for (const type of ['pointerdown', 'keydown', 'paste', 'scroll'])
+    document.addEventListener(type, active, {passive: true, capture: true});
+})();
+</script>

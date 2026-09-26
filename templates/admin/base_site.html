@@ -1,0 +1,6 @@
+{% extends "admin/base.html" %}
+{% block title %}管理后台 / Administration · {{ site_title|default:_("Django site admin") }}{% endblock %}
+{% block branding %}<h1 id="site-name"><a href="{% url 'admin:index' %}">账号管理 / Account management</a></h1>{% endblock %}
+{% block extrahead %}{{ block.super }}{% include "ui_bilingual.html" %}<script>
+document.addEventListener('DOMContentLoaded',()=>{document.documentElement.lang='zh-CN';document.querySelectorAll('label,legend,summary,#content h1,#content h2,#content h3,.app-auth a,.app-portal a,#user-tools button,.skip-to-content-link,.module thead th,#user-tools a,.breadcrumbs a,.module caption a,.submit-row input,.object-tools a,#changelist-filter h2,#changelist-filter h3,#nav-sidebar th a').forEach(el=>{if(el.tagName==='INPUT')el.value=uiBilingual(el.value);else if(el.childElementCount===0){const s=el.textContent.trim(),punct=s.endsWith(':')?':':'';el.textContent=uiBilingual(punct?s.slice(0,-1):s)+punct}})});
+</script>{% endblock %}

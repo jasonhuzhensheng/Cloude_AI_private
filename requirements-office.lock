@@ -1,0 +1,7 @@
+# Additional conversion dependencies validated on the Runpod server.
+pdf2docx==0.5.8
+fire==0.7.1
+fonttools==4.65.0
+numpy==2.5.3
+opencv-python-headless==5.0.0.93
+termcolor==3.3.0

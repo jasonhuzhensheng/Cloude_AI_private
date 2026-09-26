@@ -1,0 +1,9 @@
+Django>=5.2,<5.3
+requests>=2.32,<3
+pypdf>=6,<7
+python-docx>=1.2,<2
+openpyxl>=3.1,<4
+gunicorn>=23,<24
+Pillow>=12,<13
+PyMuPDF>=1.26,<1.28
+pdf2docx==0.5.8

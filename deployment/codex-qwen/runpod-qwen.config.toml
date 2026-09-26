@@ -1,0 +1,62 @@
+# Install as ~/.codex/runpod-qwen.config.toml after endpoint validation.
+model = "Qwen3.8-Flash-Next"
+model_provider = "runpod_qwen"
+model_context_window = 16384
+model_auto_compact_token_limit = 12000
+model_reasoning_summary = "none"
+model_reasoning_effort = "none"
+
+[model_providers.runpod_qwen]
+name = "Runpod Qwen3.8 Flash Next"
+base_url = "https://liokr6kbd9vlwk-8090.proxy.runpod.net/codex/v1"
+wire_api = "responses"
+supports_websockets = false
+stream_idle_timeout_ms = 300000
+request_max_retries = 1
+
+[model_providers.runpod_qwen.auth]
+command = "/bin/cat"
+args = ["/Users/jason/.codex/runpod-qwen.key"]
+timeout_ms = 5000
+refresh_interval_ms = 300000
+
+# Keep the 16k model within context; only this profile disables large plugin tool catalogs.
+
+[plugins."browser@openai-bundled"]
+enabled = false
+
+[plugins."visualize@openai-bundled"]
+enabled = false
+
+[plugins."documents@openai-primary-runtime"]
+enabled = false
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = false
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = false
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = false
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = false
+
+[plugins."chrome@openai-bundled"]
+enabled = false
+
+[plugins."computer-use@openai-bundled"]
+enabled = false
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = false
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = false
+
+[mcp_servers."node_repl"]
+enabled = false
+
+[features]
+js_repl = false

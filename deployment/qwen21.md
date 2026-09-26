@@ -1,0 +1,16 @@
+# Qwen-Image-2.1 local installation
+
+Official weights Qwen/Qwen-Image-2.1, revision b3179ad355be050328e483a9dfdd9e60cd62adfa. Downloaded 33,131,616,240 bytes repository; all LFS SHA256 verified against registry in /workspace/private-ai/qwen21-model/verified-sha256.json. No external image API; public model download only.
+
+Isolated runtime /workspace/private-ai/qwen21-runtime/.venv inherits system torch2.8.0+cu128, not the web app or SeedVR2 environment. Diffusers commit80c7ed262aeffbeb43ef13ae04baeb9b84515a69, Transformers c587bc884db2c2e31fc2b8102314656b17aa07b1; installed freeze stored at runtime/installed-requirements.txt. Import QwenImage21Pipeline passed. Official repository https://github.com/QwenLM/Qwen-Image-2.1 and Diffusers main docs https://huggingface.co/docs/diffusers/main/api/pipelines/qwenimage21.
+
+App: PhotoJob migration0016; /photos/ studio; portal/photo_views.py owner-protected creation/list/cancel, 4 active-photo cap, original Document protection. New generated PNGs share 100MiB Document quota; each output <=20MiB. New images have own conversation; edits remain with source conversation. Upload reuses validated /video/ image-upload endpoint. Formats1024x1024,768x1024,1024x768;40steps; BF16, noCFG, KVcache default. Existing older image editor remains separate, with link to2.1 studio. Account filenames/keys never sent to external services.
+
+photo_worker shares media-engine.lock and GPULock, does not restart active media or restore disabled chat. Model subprocess releases VRAM on exit; supports cancellation every2s and30min timeout; checks5GiB disk reserve. deployment/qwen21_infer.py handles generation/edit in offline mode and records step count. QWEN21_READY marker must only be enabled after successful real GPU generation AND edit tests. Do not start photo_worker while manual benchmark owns running PhotoJobs: its startup marks interrupted running jobs failed.
+
+Install complete; real benchmark pending GPU slot as of2026-09-20. Benchmark /workspace/private-ai/web/benchmark-qwen21.py PID76809 waits for upscale4; creates red-mug photo then editsblue, using VideoJob22 owner's account. First PhotoJob1 running with waitingstage. Logs qwen21-benchmark.log and photo-1.log etc. Do not interrupt upscale4. After both tests pass, inspect actual images and nativePNG downloads; start photo_worker (preserve existing web/video environment) and persist start-services.sh; then touchQWEN21_READY. No automation created.
+
+Deployed /workspace/private-ai-qwen21.tgz plus private-ai-qwen21-final.tgz; backup before-qwen21.tgz. Targeted append to production URLs only (do not overwrite its full file). Migration0016 applied and gunicornHUP. No activeGPU worker restarted. Server6 photo/GPU tests passed; local full102tests passed with1skip (FFmpeg absent locally). Browser photo source75 preview link verified. Actual inference/PNGpreview still pending.
+
+
+Completion handler now configured: /workspace/private-ai/web/deployment/finish_qwen21.py PID77333 waits at most2h for benchmark76809, verifies two successful images and startsphoto_worker/enablesQWEN21_READY onlyafter success. OnfailureQWEN21_FAILED changespage notice. start-services.sh persistsphoto_worker startup. Currentuserupscale4 is onlypartway throughlaterchunks; realtests remainqueued. No GPUimageperformanceorvisualquality claim yet.
