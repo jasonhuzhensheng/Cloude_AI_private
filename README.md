@@ -1,3 +1,8 @@
+# Cloude_AI_private
+Private AI 
+
+---
+
 **Deployment status:** Dedicated photo routing is enabled on replacement Pod rv5jtln62s3bix. Browser Photo28 verified automatic start, Qwen generation, saved PNG download, and automatic stop. Original failed photo Pod stays stopped. Video remains independent.
 
 ## Dedicated on-demand Photos GPU
